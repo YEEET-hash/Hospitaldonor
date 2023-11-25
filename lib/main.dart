@@ -5,9 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:DonorConnect/donation_details.dart';
 import 'package:DonorConnect/login.dart';
 
-//hi da deepak punda
-//hi da change
-sunni
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
