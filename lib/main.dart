@@ -134,10 +134,8 @@ class _MyHomePageState extends State<MyHomePage> {
       String addr2 = data['ADDRESS2'].toString();
       String addr3 = data['ADDRESS3'].toString();
       String don = data['DONATED'].toString();
-      String dat = data['DONATION_DATE'].toString();
-      String hos = data['NAME_OF_HOSPITAL'].toString();
-      String fac = data['FacultyName'].toString();
 
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (context) {
@@ -149,13 +147,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Roll no: $roll\nName: $name\nPh.no: $phno\nAddress: $addr1 $addr2,$addr3\nDonated: $don\nDonated Date: $dat\nHospital Name: $hos\nFaculty Name: $fac",
+                    "Roll no: $roll\nName: $name\nPh.no: $phno\nAddress: $addr1 $addr2,$addr3\nDonated: $don",
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ],
               ),
             ),
             actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.access_time), // Clock icon
+                onPressed: () {
+                  fetchDataFromFirebase(bata);
+                },
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -190,6 +194,57 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
     }
+  }
+
+  Future<void> fetchDataFromFirebase(String bata) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref(
+      "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI/$selectedOptionValue/$bata",
+    );
+    DatabaseEvent event = await ref.once();
+    DataSnapshot snapshot = event.snapshot;
+    dynamic data = snapshot.value;
+    String dat = data['DONATION_DATE'].toString();
+    String hos = data['NAME_OF_HOSPITAL'].toString();
+    String fac = data['FacultyName'].toString();
+    List<String> items = [];
+
+    String daa = 'd';
+    int i = 0;
+    while (daa != "null") {
+      if (data is Map) {
+        daa = data[i.toString()].toString();
+        if (daa != "null") {
+          items.add(daa);
+        }
+      }
+      i++;
+    }
+    final screenSize = MediaQuery.of(context).size;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Donation Details'
+            "\nDonated Date: $dat\nHospital Name: $hos\nFaculty Name: $fac",
+            style: const TextStyle(fontSize: 16.0),
+          ),
+          content: Container(
+            width: screenSize.width * 0.8, // 80% of screen width
+            height: screenSize.height * 0.5, // 50% of screen height
+            child: ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(items[index]),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override

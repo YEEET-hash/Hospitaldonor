@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:DonorConnect/home.dart';
-import 'main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -12,6 +12,85 @@ class MyLogin extends StatefulWidget {
 class _MyLoginState extends State<MyLogin> {
   TextEditingController un = TextEditingController();
   TextEditingController ps = TextEditingController();
+
+  Future<void> _loginUser() async {
+    String eun = un.text;
+    String eps = ps.text;
+
+    if (eun.isNotEmpty && eps.isNotEmpty) {
+      try {
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: eun,
+          password: eps,
+        );
+
+        if (userCredential.user != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        // Handle Firebase Authentication errors
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text(e.message ?? 'An error occurred'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } else {
+      // Handle the case where eun or eps is empty
+      print("Email and/or Password is empty");
+    }
+  }
+
+  Future<void> _resetPassword() async {
+    String email = un.text;
+
+    if (email.isNotEmpty) {
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        // Show a success message or navigate to a success screen.
+      } on FirebaseAuthException catch (e) {
+        // Handle Firebase Authentication errors
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text(e.message ?? 'An error occurred'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } else {
+      // Handle the case where the email is empty
+      print("Email is empty");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +109,6 @@ class _MyLoginState extends State<MyLogin> {
               SizedBox(
                 height: 100,
               ),
-              // padding: const EdgeInsets.only(left: 37, top: 130),
               Center(
                 child: Text(
                   'SREC DonorConnect',
@@ -41,7 +119,6 @@ class _MyLoginState extends State<MyLogin> {
                 ),
               ),
               Expanded(
-                // Wrap SingleChildScrollView with Expanded
                 child: SingleChildScrollView(
                   child: Container(
                     padding: EdgeInsets.only(
@@ -78,42 +155,14 @@ class _MyLoginState extends State<MyLogin> {
                           ),
                         ),
                         const SizedBox(
-                          height: 120,
+                          height: 20,
+                        ),
+                        TextButton(
+                          onPressed: _resetPassword,
+                          child: Text('Forgot Password?'),
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            String eun = un.text;
-                            String eps = ps.text;
-
-                            if (eun == 'admin' && eps == 'srec@123') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ),
-                              );
-                            } else {
-                              // Display an error message
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text('Error'),
-                                    content:
-                                        Text('Username/Password is wrong.'),
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          },
+                          onPressed: _loginUser,
                           child: const Text('Log in'),
                         ),
                       ],

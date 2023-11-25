@@ -31,7 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_database: ^10.2.4
+  firebase_auth: ^4.12.1
+
   firebase_core: ^2.8.0
+  uuid: ^3.0.4
 
 
 
@@ -97,3 +100,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
