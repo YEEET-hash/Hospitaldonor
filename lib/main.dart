@@ -7,7 +7,7 @@ import 'package:DonorConnect/login.dart';
 
 //hi da change
 
-Future<void> mainn() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
