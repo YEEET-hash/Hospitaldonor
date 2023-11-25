@@ -19,34 +19,40 @@ class _DonationDetailsPageState extends State<DonationDetailsPage> {
   bool isDonated = false;
   String hospitalName = "";
   String facultyName = "";
-
   DatabaseReference get databaseReference => FirebaseDatabase.instance.ref(
       "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI/${widget.selectedOptionValue}/${widget.bata}");
 
   Future<void> updateDonationStatus() async {
     final ref = databaseReference;
+    var donationStatus = isDonated ? "Donated" : "Not Donated";
+    DatabaseEvent event = await ref.once();
+    DataSnapshot snapshot = event.snapshot;
 
-    final donationStatus = isDonated ? "Donated" : "Not Donated";
+    dynamic data = snapshot.value;
+    if (data is Map) {
+      int count = data['DONATION_COUNT'];
 
-    if (isDonated) {
-      final newDonationKey =
-          ref.push().key; // Generate a unique key for each donation
-      final dataToAdd = {
-        newDonationKey: {
+      if (isDonated) {
+        final newDonationKey = count.toString();
+        final dataToAdd = {
+          newDonationKey: {
+            'DONATED': donationStatus,
+            'DONATION_DATE': DateTime.now().toIso8601String(),
+            'NAME_OF_HOSPITAL': hospitalName,
+            'FacultyName': facultyName,
+          }
+        };
+        count = count + 1;
+        await ref.update(dataToAdd.cast<String, Object?>());
+        await ref.update({'DONATED': donationStatus});
+        await ref.update({"DONATION_COUNT": count++}.cast<String, Object?>());
+      } else {
+        final dataToUpdate = {
           'DONATED': donationStatus,
-          'DONATION_DATE': DateTime.now().toIso8601String(),
-          'NAME_OF_HOSPITAL': hospitalName,
-          'FacultyName': facultyName,
-        }
-      };
+        };
 
-      await ref.update(dataToAdd.cast<String, Object?>());
-    } else {
-      final dataToUpdate = {
-        'DONATED': donationStatus,
-      };
-
-      await ref.update(dataToUpdate);
+        await ref.update(dataToUpdate);
+      }
     }
   }
 
@@ -99,7 +105,7 @@ class _DonationDetailsPageState extends State<DonationDetailsPage> {
               ),
             ),
             CheckboxListTile(
-              title: Text("Donated"),
+              title: Text("Donted"),
               value: isDonated,
               onChanged: (newValue) {
                 setState(() {
