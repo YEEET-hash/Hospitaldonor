@@ -209,6 +209,8 @@ class _MyHomePageState extends State<MyHomePage> {
     String dat = data['DONATION_DATE'].toString();
     String hos = data['NAME_OF_HOSPITAL'].toString();
     String fac = data['FacultyName'].toString();
+    String count = data['DONATION_COUNT'].toString();
+
     List<String> items = [];
 
     String daa = 'd';
@@ -230,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return AlertDialog(
           title: Text(
             'Donation Details'
-            "\nDonated Date: $dat\nHospital Name: $hos\nFaculty Name: $fac",
+            "\nDonated Date: $count ",
             style: const TextStyle(fontSize: 16.0),
           ),
           content: Container(
