@@ -157,11 +157,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.access_time), // Clock icon
-                onPressed: () {
-                  fetchDataFromFirebase(bata);
-                },
+              Visibility(
+                visible: don !=
+                    "Not Donated", // Show the icon if don is not "Donated"
+                child: IconButton(
+                  icon: Icon(Icons.access_time), // Clock icon
+                  onPressed: () {
+                    fetchDataFromFirebase(bata);
+                  },
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -232,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return AlertDialog(
           title: Text(
             'Donation Details'
-            "\nDonated Date: $count ",
+            "Donated Date: $dat\nHospital Name: $hos\nFaculty Name: $fac\nDonated count: $count ",
             style: const TextStyle(fontSize: 16.0),
           ),
           content: Container(
