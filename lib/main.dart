@@ -214,6 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String hos = data['NAME_OF_HOSPITAL'].toString();
     String fac = data['FacultyName'].toString();
     String count = data['DONATION_COUNT'].toString();
+    String roll = data['ROLL_NO'].toString();
 
     List<String> items = [];
 
@@ -236,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return AlertDialog(
           title: Text(
             'Donation Details'
-            "Donated Date: $dat\nHospital Name: $hos\nFaculty Name: $fac\nDonated count: $count ",
+            "\nRoll No: $roll\nDonated Date: $dat\nHospital Name: $hos\nFaculty Name: $fac\nDonated count: $count \n",
             style: const TextStyle(fontSize: 16.0),
           ),
           content: Container(
