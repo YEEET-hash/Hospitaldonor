@@ -9,11 +9,6 @@ class MyLogin extends StatefulWidget {
   State<MyLogin> createState() => _MyLoginState();
 }
 
-//asas
-//po da vetti payala
-//ajkjabdjkasbjkda
-//asjlndnkahsdbkasbs
-//ljalsdbkjabsd
 class _MyLoginState extends State<MyLogin> {
   TextEditingController un = TextEditingController();
   TextEditingController ps = TextEditingController();
