@@ -56,6 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String? selectedOption;
   String selectedOptionValue = '';
 
+  String  sre = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
+  String  srh = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
+  String  conn= "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
+
+
   final ScrollController _scrollController = ScrollController();
 
   Future<void> _incrementCounter() async {
@@ -87,9 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedOptionValue = 'AB1-';
     }
 
-    DatabaseReference ref = FirebaseDatabase.instance.ref(
-      "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI/$selectedOptionValue",
-    );
+    DatabaseReference ref = FirebaseDatabase.instance.ref("$conn/$selectedOptionValue",);
     DataSnapshot snapshot = (await ref.once()).snapshot;
     setState(() {
       data = snapshot.value as Map<dynamic, dynamic>;
@@ -101,9 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
       String bon = value['DONATED'].toString();
 
       setState(() {
-        print(widget.switchValue);
-        print(bon);
-        print(name);
+
+
         if (widget.switchValue == false) {
           if (bon == "Not Donated") {
             fdata.add("$roll Name: $name\nPh.no: $addr ");
@@ -119,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _showFullData(String bata) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref(
-      "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI/$selectedOptionValue/$bata",
+      "$conn/$selectedOptionValue/$bata",
     );
     DatabaseEvent event = await ref.once();
     DataSnapshot snapshot = event.snapshot;
@@ -205,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> fetchDataFromFirebase(String bata) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref(
-      "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI/$selectedOptionValue/$bata",
+      "$conn/$selectedOptionValue/$bata",
     );
     DatabaseEvent event = await ref.once();
     DataSnapshot snapshot = event.snapshot;

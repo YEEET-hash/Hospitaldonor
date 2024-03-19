@@ -5,6 +5,7 @@ class DonationDetailsPage extends StatefulWidget {
   final String bata;
   final String selectedOptionValue;
 
+
   const DonationDetailsPage({
     Key? key,
     required this.bata,
@@ -19,8 +20,11 @@ class _DonationDetailsPageState extends State<DonationDetailsPage> {
   bool isDonated = false;
   String hospitalName = "";
   String facultyName = "";
+  String  sre = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
+  String  srh = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
+  String  conn= "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
   DatabaseReference get databaseReference => FirebaseDatabase.instance.ref(
-      "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI/${widget.selectedOptionValue}/${widget.bata}");
+      "$conn/${widget.selectedOptionValue}/${widget.bata}");
 
   Future<void> updateDonationStatus() async {
     final ref = databaseReference;

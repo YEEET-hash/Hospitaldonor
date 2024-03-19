@@ -4,6 +4,9 @@ import 'package:firebase_database/firebase_database.dart';
 class DonationDetailsPage extends StatelessWidget {
   final String selectedOptionValue;
   final String rollNumber;
+  String  sre = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
+  String  srh = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
+  String  conn= "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
 
   DonationDetailsPage({
     required this.selectedOptionValue,
@@ -12,7 +15,7 @@ class DonationDetailsPage extends StatelessWidget {
 
   Future<void> _showDonationDetails(BuildContext context) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref(
-      "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI/$selectedOptionValue/$rollNumber",
+      "$conn/$selectedOptionValue/$rollNumber",
     );
 
     DataSnapshot dataSnapshot = (await ref.once()) as DataSnapshot;

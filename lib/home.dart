@@ -161,9 +161,11 @@ class _HomeState extends State<Home> {
                         ),
                       ],
                     ),
+
                   ],
                 ),
               ),
+
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
@@ -189,6 +191,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
+
               SingleChildScrollView(
                 padding: EdgeInsets.symmetric(
                   horizontal: 20,
