@@ -5,7 +5,6 @@ class DonationDetailsPage extends StatefulWidget {
   final String bata;
   final String selectedOptionValue;
 
-
   const DonationDetailsPage({
     Key? key,
     required this.bata,
@@ -20,11 +19,11 @@ class _DonationDetailsPageState extends State<DonationDetailsPage> {
   bool isDonated = false;
   String hospitalName = "";
   String facultyName = "";
-  String  sre = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
-  String  srh = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
-  String  conn= "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
-  DatabaseReference get databaseReference => FirebaseDatabase.instance.ref(
-      "$conn/${widget.selectedOptionValue}/${widget.bata}");
+  String sre = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
+  String srh = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
+  String conn = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
+  DatabaseReference get databaseReference => FirebaseDatabase.instance
+      .ref("$conn/${widget.selectedOptionValue}/${widget.bata}");
 
   Future<void> updateDonationStatus() async {
     final ref = databaseReference;
@@ -33,6 +32,7 @@ class _DonationDetailsPageState extends State<DonationDetailsPage> {
     DataSnapshot snapshot = event.snapshot;
 
     dynamic data = snapshot.value;
+
     if (data is Map) {
       int count = data['DONATION_COUNT'];
 

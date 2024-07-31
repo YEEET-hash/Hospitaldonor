@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:DonorConnect/main.dart';
+import 'package:DonorConnect/Request_update.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -62,6 +63,20 @@ class _HomeState extends State<Home> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      NotificationScreen(), // Replace RequestedUpdate with your screen widget
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Container(
         child: Container(
@@ -161,11 +176,17 @@ class _HomeState extends State<Home> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),
-
+              Text(
+                '   \n  Admins',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
@@ -191,7 +212,6 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-
               SingleChildScrollView(
                 padding: EdgeInsets.symmetric(
                   horizontal: 20,

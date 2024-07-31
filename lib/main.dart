@@ -5,9 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:DonorConnect/donation_details.dart';
 import 'package:DonorConnect/login.dart';
 
-//fdsf
-//dfg
-//hello
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -56,10 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String? selectedOption;
   String selectedOptionValue = '';
 
-  String  sre = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
-  String  srh = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
-  String  conn= "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
-
+  String sre = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
+  String srh = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU";
+  String conn = "1XyRygScOczkhXImWGD4ehnGwIze8bftFnABelt9mtAI";
 
   final ScrollController _scrollController = ScrollController();
 
@@ -92,20 +88,20 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedOptionValue = 'AB1-';
     }
 
-    DatabaseReference ref = FirebaseDatabase.instance.ref("$conn/$selectedOptionValue",);
+    DatabaseReference ref = FirebaseDatabase.instance.ref(
+      "$conn/$selectedOptionValue",
+    );
     DataSnapshot snapshot = (await ref.once()).snapshot;
     setState(() {
       data = snapshot.value as Map<dynamic, dynamic>;
     });
     data.forEach((key, value) {
-      String name = value['NAME'];
+      String name = value['NAME'].toString();
       String addr = value['CONTACT_NO'].toString();
       String roll = value['ROLL_NO'].toString();
       String bon = value['DONATED'].toString();
 
       setState(() {
-
-
         if (widget.switchValue == false) {
           if (bon == "Not Donated") {
             fdata.add("$roll Name: $name\nPh.no: $addr ");
@@ -212,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
     DatabaseEvent event = await ref.once();
     DataSnapshot snapshot = event.snapshot;
     dynamic data = snapshot.value;
-    String dat = data['DONATION_DATE'].toString();
+    String dat = data['DONATION_DATE'].toString() + "\n";
     String hos = data['NAME_OF_HOSPITAL'].toString();
     String fac = data['FacultyName'].toString();
     String count = data['DONATION_COUNT'].toString();
